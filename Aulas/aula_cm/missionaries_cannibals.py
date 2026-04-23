@@ -1,6 +1,10 @@
 from collections import deque
 import heapq
 
+#Guilherme Bento Ramos 185226
+#Missionarios e Canibais DFS e A*
+#Feito com auxilio do Gemini para debug
+
 class State:
     def __init__(self, m_left, c_left, boat, m_right, c_right, parent=None, action=None, cost=0, heuristic=0):
         self.m_left = m_left
