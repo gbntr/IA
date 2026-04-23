@@ -65,19 +65,24 @@ def calcular_aptidao(cromossomo):
         if volume_viagem > CAPACIDADE_CAMINHAO:
             penalidade_capacidade += (volume_viagem - CAPACIDADE_CAMINHAO) * 50 # Peso da penalidade
             
-        # Calcular distância percorrida na viagem
+        # O Depósito é o B0. O caminhão sai de B0 e volta para B0 em cada viagem.
+        # B0 pode estar dentro da 'viagem' para contabilizar seu lixo, mas a rota em si parte do B0.
+        distancia_viagem = MATRIZ_DISTANCIAS[0][viagem[0]]
+        
         if len(viagem) > 1:
             for i in range(len(viagem) - 1):
-                distancia_total += MATRIZ_DISTANCIAS[viagem[i]][viagem[i+1]]
+                distancia_viagem += MATRIZ_DISTANCIAS[viagem[i]][viagem[i+1]]
+                
+        distancia_viagem += MATRIZ_DISTANCIAS[viagem[-1]][0]
+        distancia_total += distancia_viagem
                 
     # Penalizar número excessivo de viagens (mínimo necessário é 3)
     penalidade_viagens = max(0, len(viagens) - 3) * 20
     
-    # Queremos minimizar o custo, então a aptidão é o inverso do custo total (ou usar o valor negativo)
+    # Queremos minimizar o custo, então a aptidão será o valor negativo do custo total
     custo_total = distancia_total + penalidade_capacidade + penalidade_viagens
     
-    # Adicionar um pequeno valor para evitar divisão por zero
-    return 1.0 / (custo_total + 1e-6), custo_total, distancia_total, viagens
+    return -custo_total, custo_total, distancia_total, viagens
 
 def selecao_torneio(populacao, aptidoes, k=3):
     selecionados = []
@@ -129,7 +134,7 @@ def mutacao_swap(cromossomo):
 def executar_ag():
     populacao = criar_populacao(TAMANHO_POPULACAO)
     melhor_solucao = None
-    melhor_aptidao = -1
+    melhor_aptidao = float('-inf')
     melhor_custo = float('inf')
     melhor_viagens = []
     
@@ -184,12 +189,15 @@ if __name__ == "__main__":
     distancia_real = 0
     for i, viagem in enumerate(viagens_finais):
         vol = sum(VOLUME_POR_BAIRRO[b] for b in viagem)
-        dist = 0
+        
+        dist = MATRIZ_DISTANCIAS[0][viagem[0]]
         if len(viagem) > 1:
             for j in range(len(viagem) - 1):
                 dist += MATRIZ_DISTANCIAS[viagem[j]][viagem[j+1]]
+        dist += MATRIZ_DISTANCIAS[viagem[-1]][0]
+        
         distancia_real += dist
-        nomes_bairros = [f"B{b}" for b in viagem]
+        nomes_bairros = ["B0"] + [f"B{b}" for b in viagem] + ["B0"]
         print(f"  Viagem {i+1}: Rota {nomes_bairros} | Volume: {vol} m³ | Distância: {dist} km")
         
     print(f"Distância Percorrida Real: {distancia_real} km")
