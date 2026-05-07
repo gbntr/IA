@@ -1,0 +1,3 @@
+[submodule "Aulas/aula12/Connect4-Python"]
+	path = Aulas/aula12/Connect4-Python
+	url = https://github.com/KeithGalli/Connect4-Python.git
