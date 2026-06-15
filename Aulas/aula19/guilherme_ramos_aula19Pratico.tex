@@ -1,0 +1,43 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\title{\textbf{Aula 19 --- CNN no dataset cats\_vs\_dogs}}
+\author{Breno Porto Pinheiro do Prado \quad RA 185196 \\ Guilherme Bento Ramos \quad RA 185226}
+\date{}
+
+\begin{document}
+\maketitle
+
+O exerc\'icio consiste em aplicar uma Rede Neural Convolucional (CNN) a um dataset de imagens do TensorFlow. Foi escolhido o dataset \texttt{cats\_vs\_dogs}, cujo objetivo \'e classificar imagens entre gatos e cachorros.
+
+\medskip
+
+O conjunto de dados foi dividido em 80\% para treino e 20\% para valida\c{c}\~ao. As imagens foram redimensionadas para $150\times150$ pixels e os valores dos pixels normalizados para o intervalo $[0,\,1]$. A rede foi constru\'ida com tr\^es blocos de camada convolucional seguida de pooling, uma camada densa de 64 neur\^onios e uma sa\'ida com ativa\c{c}\~ao sigmoid, adequada para classifica\c{c}\~ao bin\'aria.
+
+\section*{Resultado}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{Pasted image.png}
+\caption{Sa\'ida do terminal ao rodar o c\'odigo.}
+\end{figure}
+
+O modelo terminou o treino de 10 \'epocas com:
+
+\begin{itemize}
+    \item \textbf{Loss de valida\c{c}\~ao:} 0,6932
+    \item \textbf{Acur\'acia de valida\c{c}\~ao:} 49,01\%
+\end{itemize}
+
+A acur\'acia ficou perto de 50\%, o que significa que o modelo praticamente chutou. Isso acontece porque uma CNN simples sem aumento de dados n\~ao consegue aprender padr\~oes suficientes para generalizar bem nesse dataset. Para melhorar, seria necess\'ario usar t\'ecnicas como \textit{data augmentation} ou uma rede pr\'e-treinada.
+
+\bigskip
+\noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\small
+\textbf{Declara\c{c}\~ao de uso de IA:} este trabalho contou com aux\'ilio do assistente Claude Sonnet 4.6 (Anthropic) para redigir o c\'odigo e o relat\'orio.}}
+
+\end{document}

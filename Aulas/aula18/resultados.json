@@ -1,0 +1,26 @@
+{
+  "train": {
+    "wins": 200,
+    "deaths": 0,
+    "timeouts": 0,
+    "mean_reward": 1079.0,
+    "mean_steps": 11.0,
+    "n": 200
+  },
+  "test_zero_shot": {
+    "wins": 0,
+    "deaths": 181,
+    "timeouts": 19,
+    "mean_reward": -1086.115,
+    "mean_steps": 62.105,
+    "n": 200
+  },
+  "test_fine_tuned": {
+    "wins": 200,
+    "deaths": 0,
+    "timeouts": 0,
+    "mean_reward": 1134.0,
+    "mean_steps": 16.0,
+    "n": 200
+  }
+}
